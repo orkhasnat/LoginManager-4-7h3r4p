@@ -1,20 +1,23 @@
 const STORAGE_KEY = 'loginProfiles'
 
-function getProfiles(callback) {
-  chrome.storage.sync.get([STORAGE_KEY], (result) => {
-    callback(result[STORAGE_KEY] || {})
+function getProfiles() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get([STORAGE_KEY], (result) => {
+      resolve(result[STORAGE_KEY] || {})
+    })
   })
 }
 
-function saveProfiles(profiles, callback) {
-  chrome.storage.sync.set({ [STORAGE_KEY]: profiles }, () => {
-    if (callback) callback()
+function saveProfiles(profiles) {
+  return new Promise((resolve) => {
+    chrome.storage.sync.set({ [STORAGE_KEY]: profiles }, resolve)
   })
 }
 
-function deleteProfile(profileKey, callback) {
-  getProfiles((profiles) => {
+async function deleteProfile(profileKey) {
+  const profiles = await getProfiles()
+  if (profileKey in profiles) {
     delete profiles[profileKey]
-    saveProfiles(profiles, callback)
-  })
+    await saveProfiles(profiles)
+  }
 }

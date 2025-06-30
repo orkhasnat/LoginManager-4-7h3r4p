@@ -1,41 +1,46 @@
-function populateDropdown($dropdown, profiles) {
-  $dropdown.empty()
+function populateDropdown(dropdown, profiles) {
+  dropdown.innerHTML = ''
   Object.keys(profiles).forEach(key => {
-    const label = `${profiles[key].code} ${profiles[key].loginName}`
-    $dropdown.append($('<option>').val(key).text(label))
+    const option = document.createElement('option')
+    option.value = key
+    option.textContent = `${profiles[key].code} ${profiles[key].loginName}`
+    dropdown.appendChild(option)
   })
 }
 
-function refreshDropdown($dropdown) {
-  getProfiles((profiles) => populateDropdown($dropdown, profiles))
+async function refreshDropdown(dropdown) {
+  const profiles = await getProfiles()
+  populateDropdown(dropdown, profiles)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const $extLoginButton = $('#extLoginButton')
-  const $dropdown = $('#dropdown')
+  const extLoginButton = document.getElementById('extLoginButton')
+  const dropdown = document.getElementById('dropdown')
 
-  refreshDropdown($dropdown) // initial load
+  refreshDropdown(dropdown)
 
-  // Listen for storage changes
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area === 'sync' && changes.loginProfiles) {
-      refreshDropdown($dropdown)
+      refreshDropdown(dropdown)
     }
   })
 
-  $extLoginButton.on('click', async () => {
-    const selectedKey = $dropdown.val()
+  extLoginButton.addEventListener('click', async () => {
+    const selectedKey = dropdown.value
+    if (!selectedKey) return
 
-    getProfiles((profiles) => {
-      const loginInfo = profiles[selectedKey]
-      if (!loginInfo) return
+    const profiles = await getProfiles()
+    const loginInfo = profiles[selectedKey]
+    if (!loginInfo) return
 
-      chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-        chrome.runtime.sendMessage({
-          action: "performLogin",
-          tabId: tab.id,
-          loginInfo: loginInfo
-        })
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+      if (!activeTab) return
+
+      chrome.runtime.sendMessage({
+        action: "performLogin",
+        tabId: activeTab.id,
+        loginInfo
       })
     })
   })
