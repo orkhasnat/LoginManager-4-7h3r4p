@@ -1,28 +1,28 @@
-function populateDropdown(profileDropdown) {
-  Object.keys(loginDetails).forEach(key => {
-    const label = `${loginDetails[key].code} ${loginDetails[key].loginName}`
-    profileDropdown.append($('<option>').val(key).text(label))
+function populateDropdown($dropdown, profiles) {
+  $dropdown.empty()
+  Object.keys(profiles).forEach(key => {
+    const label = `${profiles[key].code} ${profiles[key].loginName}`
+    $dropdown.append($('<option>').val(key).text(label))
   })
-}
-
-function getLoginInfo(profile) {
-  return loginDetails[profile]
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const $extLoginButton = $('#extLoginButton')
   const $dropdown = $('#dropdown')
 
-  populateDropdown($dropdown)
+  getProfiles((profiles) => {
+    populateDropdown($dropdown, profiles)
 
-  $extLoginButton.on('click', async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    const loginInfo = getLoginInfo($dropdown.val());
+    $extLoginButton.on('click', async () => {
+      const selectedKey = $dropdown.val()
+      const loginInfo = profiles[selectedKey]
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
 
-    chrome.runtime.sendMessage({
-      action: "performLogin",
-      tabId: tab.id,
-      loginInfo: loginInfo
+      chrome.runtime.sendMessage({
+        action: "performLogin",
+        tabId: tab.id,
+        loginInfo: loginInfo
+      })
     })
   })
 })
