@@ -1,3 +1,4 @@
+/* === GLOBAL BUTTONS === */
 .button {
     border: none;
     color: white;
@@ -7,16 +8,25 @@
     display: inline-block;
     font-size: 14px;
     height: 34px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
 }
 
 .blue-btn {
     background-color: #337ab7;
 }
 
+.blue-btn:hover {
+    background-color: #2a5d8f;
+}
+
+/* === CONTAINERS & DIVS === */
 div {
     margin: 5px;
 }
 
+/* === SELECT DROPDOWN === */
 .styled-select {
     height: 29px;
     overflow: hidden;
@@ -30,6 +40,7 @@ div {
     height: 29px;
     padding: 5px;
     width: 268px;
+    color: #000;
 }
 
 .styled-select.slate {
@@ -45,18 +56,16 @@ div {
     width: 268px;
 }
 
+/* === BORDER RADIUS CLASSES === */
 .rounded {
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
     border-radius: 10px;
 }
 
 .semi-square {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     border-radius: 5px;
 }
 
+/* === BACKGROUND COLORS === */
 .slate {
     background-color: #ddd;
 }
@@ -77,15 +86,14 @@ div {
     background-color: #000;
 }
 
+/* === SELECT COLORS BASED ON THEME === */
 .slate select {
     color: #000;
 }
 
-.green select {
-    color: #fff;
-}
-
-.blue select {
+.green select,
+.blue select,
+.black select {
     color: #fff;
 }
 
@@ -93,6 +101,189 @@ div {
     color: #000;
 }
 
-.black select {
-    color: #fff;
+/* === PROFILE ENTRY CURSOR === */
+.profile-entry {
+    cursor: pointer;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+/* === CANCEL BUTTON (GLOBAL) === */
+#cancelEditBtn {
+    background-color: #aaa;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 34px;
+    padding: 6px 12px;
+    transition: background-color 0.2s ease;
+    display: none;
+    /* default hidden, shown in edit mode */
+}
+
+#cancelEditBtn:hover {
+    background-color: #888;
+}
+
+/* === PROFILE PAGE STYLES === */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+#container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #222;
+}
+
+/* === PROFILES LIST === */
+/* Container for the list */
+#profileList {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 32px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
+    font-size: 16px;
+}
+
+/* Each profile as a card */
+#profileList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    margin: 10px 16px;
+    background: #f9faff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.05);
+    transition: box-shadow 0.25s ease, background-color 0.25s ease;
+    cursor: default;
+}
+
+#profileList li:hover {
+    background: #e6f0ff;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.12);
+}
+
+/* Profile info text */
+.profile-info {
+    font-weight: 600;
+    color: #1a1a1a;
+    flex-grow: 1;
+    margin-right: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Action buttons container */
+.profile-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Common button styling */
+.profile-actions button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    color: white;
+}
+
+/* Edit button */
+.profile-actions button.edit-btn {
+    background-color: #4a90e2;
+}
+
+.profile-actions button.edit-btn:hover {
+    background-color: #357abd;
+}
+
+/* Delete button */
+.profile-actions button.delete-btn {
+    background-color: #e14c4c;
+}
+
+.profile-actions button.delete-btn:hover {
+    background-color: #b63939;
+}
+
+
+/* === PROFILE FORM === */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    padding: 8px 10px;
+    margin-bottom: 18px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.2s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+/* Form buttons */
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+#submitBtn,
+#cancelEditBtn {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#submitBtn {
+    background-color: #4a90e2;
+    color: white;
+}
+
+#submitBtn:hover {
+    background-color: #357abd;
 }

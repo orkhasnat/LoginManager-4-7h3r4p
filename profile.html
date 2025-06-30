@@ -5,27 +5,37 @@
   <meta charset="UTF-8" />
   <title>Manage Login Profiles</title>
   <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
-  <h1>Manage Profiles</h1>
-
-  <form id="profileForm">
-    <input type="text" id="key" placeholder="Profile Key (e.g. user1)" required><br>
-    <input type="text" id="loginName" placeholder="Login Name" required><br>
-    <input type="text" id="password" placeholder="Password" required><br>
-    <input type="text" id="code" placeholder="Provider Code" required><br>
-    <button type="submit" class="button blue-btn semi-square">Add / Update Profile</button>
-  </form>
-
-  <hr>
-
-  <h2>Saved Profiles</h2>
-  <ul id="profileList"></ul>
-
   <script src="js/jquery-3.7.1.min.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/profile-manager.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Manage Profiles</h1>
+    <form id="profileForm">
+      <label for="key">Profile Key</label>
+      <input type="text" id="key" placeholder="Profile Key " required>
+
+      <label for="loginName">Login Name</label>
+      <input type="text" id="loginName" placeholder="username" required>
+
+      <label for="password">Password</label>
+      <input type="text" id="password" placeholder="password" required>
+
+      <label for="code">Provider Code</label>
+      <input type="text" id="code" placeholder="provider code" required>
+
+      <div class="form-buttons">
+        <input type="submit" id="submitBtn" value="Add Profile">
+        <input type="button" id="cancelEditBtn" value="Cancel">
+      </div>
+    </form>
+  </div>
+
+  <hr>
+  <h2>Saved Profiles</h2>
+  <ul id="profileList"></ul>
 </body>
 
 </html>

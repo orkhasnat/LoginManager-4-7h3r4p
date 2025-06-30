@@ -6,22 +6,36 @@ function populateDropdown($dropdown, profiles) {
   })
 }
 
+function refreshDropdown($dropdown) {
+  getProfiles((profiles) => populateDropdown($dropdown, profiles))
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const $extLoginButton = $('#extLoginButton')
   const $dropdown = $('#dropdown')
 
-  getProfiles((profiles) => {
-    populateDropdown($dropdown, profiles)
+  refreshDropdown($dropdown) // initial load
 
-    $extLoginButton.on('click', async () => {
-      const selectedKey = $dropdown.val()
+  // Listen for storage changes
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'sync' && changes.loginProfiles) {
+      refreshDropdown($dropdown)
+    }
+  })
+
+  $extLoginButton.on('click', async () => {
+    const selectedKey = $dropdown.val()
+
+    getProfiles((profiles) => {
       const loginInfo = profiles[selectedKey]
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+      if (!loginInfo) return
 
-      chrome.runtime.sendMessage({
-        action: "performLogin",
-        tabId: tab.id,
-        loginInfo: loginInfo
+      chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+        chrome.runtime.sendMessage({
+          action: "performLogin",
+          tabId: tab.id,
+          loginInfo: loginInfo
+        })
       })
     })
   })
