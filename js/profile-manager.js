@@ -7,20 +7,42 @@ function renderProfiles() {
 
     Object.keys(profiles).forEach(key => {
       const p = profiles[key]
-      const label = `${key}: ${p.code} ${p.loginName} ${p.password}`
+      const displayText = `${p.code} - ${p.loginName}`
 
-      const $item = $(`
-        <li>
-          ${label}
-          <button data-key="${key}" class="edit-btn">✏️ Edit</button>
-          <button data-key="${key}" class="delete-btn">❌ Delete</button>
-        </li>
-      `)
+      // Profile text container
+      const $info = $('<div>')
+        .addClass('profile-info')
+        .text(displayText)
+        .attr('title', `${key}: ${p.loginName} / ${p.password}`) // optional tooltip
+
+      // Edit button
+      const $editBtn = $('<button>')
+        .addClass('edit-btn')
+        .text('Edit')
+        .attr('data-key', key)
+        .on('click', () => loadProfileForEdit(key))
+
+      // Delete button
+      const $deleteBtn = $('<button>')
+        .addClass('delete-btn')
+        .text('Delete')
+        .attr('data-key', key)
+        .on('click', () => deleteProfile(key))
+
+      // Actions container
+      const $actions = $('<div>')
+        .addClass('profile-actions')
+        .append($editBtn, $deleteBtn)
+
+      // Final <li> card
+      const $item = $('<li>').append($info, $actions)
 
       $list.append($item)
     })
   })
 }
+
+
 
 function fillForm(key, profile) {
   $('#key').val(key).prop('disabled', true); // disable key editing during update
