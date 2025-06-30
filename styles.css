@@ -1,0 +1,98 @@
+.button {
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    height: 34px;
+}
+
+.blue-btn {
+    background-color: #337ab7;
+}
+
+div {
+    margin: 5px;
+}
+
+.styled-select {
+    height: 29px;
+    overflow: hidden;
+    width: 240px;
+}
+
+.styled-select select {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px;
+    width: 268px;
+}
+
+.styled-select.slate {
+    background: url(img/down-arrow1.jpg) no-repeat right center;
+    height: 34px;
+    width: 240px;
+}
+
+.styled-select.slate select {
+    border: 1px solid #ccc;
+    font-size: 16px;
+    height: 34px;
+    width: 268px;
+}
+
+.rounded {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 10px;
+}
+
+.semi-square {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.slate {
+    background-color: #ddd;
+}
+
+.green {
+    background-color: #779126;
+}
+
+.blue {
+    background-color: #3b8ec2;
+}
+
+.yellow {
+    background-color: #eec111;
+}
+
+.black {
+    background-color: #000;
+}
+
+.slate select {
+    color: #000;
+}
+
+.green select {
+    color: #fff;
+}
+
+.blue select {
+    color: #fff;
+}
+
+.yellow select {
+    color: #000;
+}
+
+.black select {
+    color: #fff;
+}

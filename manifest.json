@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Therap Login Manager (Ork)",
+    "version": "2.0",
+    "description": "Helps to store and easily login into the Therap system",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    },
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://*.therapservices.net/*",
+        "https://*.therapbd.net/*",
+        "https://*.therapdev.net/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    }
+}
