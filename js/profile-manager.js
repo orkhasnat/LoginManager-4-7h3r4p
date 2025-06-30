@@ -1,80 +1,90 @@
 let editKey = null
 
+function createElement(tag, className, textContent) {
+  const el = document.createElement(tag)
+  if (className) el.className = className
+  if (textContent) el.textContent = textContent
+  return el
+}
+
 function renderProfiles() {
   getProfiles((profiles) => {
-    const $list = $('#profileList')
-    $list.empty()
+    const list = document.getElementById('profileList')
+    list.innerHTML = ''
 
     Object.keys(profiles).forEach(key => {
       const p = profiles[key]
       const displayText = `${p.code} - ${p.loginName}`
 
-      // Profile text container
-      const $info = $('<div>')
-        .addClass('profile-info')
-        .text(displayText)
-        .attr('title', `${key}: ${p.loginName} / ${p.password}`) // optional tooltip
+      const info = createElement('div', 'profile-info', displayText)
+      info.title = `${key}: ${p.loginName} / ${p.password}`
 
-      // Edit button
-      const $editBtn = $('<button>')
-        .addClass('edit-btn')
-        .text('Edit')
-        .attr('data-key', key)
-        .on('click', () => loadProfileForEdit(key))
+      const editBtn = createElement('button', 'edit-btn', 'Edit')
+      editBtn.dataset.key = key
+      editBtn.addEventListener('click', () => loadProfileForEdit(key))
 
-      // Delete button
-      const $deleteBtn = $('<button>')
-        .addClass('delete-btn')
-        .text('Delete')
-        .attr('data-key', key)
-        .on('click', () => deleteProfile(key))
+      const deleteBtn = createElement('button', 'delete-btn', 'Delete')
+      deleteBtn.dataset.key = key
+      deleteBtn.addEventListener('click', () => {
+        deleteProfile(key, renderProfiles)
+        if (editKey === key) resetForm()
+      })
 
-      // Actions container
-      const $actions = $('<div>')
-        .addClass('profile-actions')
-        .append($editBtn, $deleteBtn)
+      const actions = createElement('div', 'profile-actions')
+      actions.append(editBtn, deleteBtn)
 
-      // Final <li> card
-      const $item = $('<li>').append($info, $actions)
+      const item = document.createElement('li')
+      item.append(info, actions)
 
-      $list.append($item)
+      list.appendChild(item)
     })
   })
 }
 
-
-
 function fillForm(key, profile) {
-  $('#key').val(key).prop('disabled', true); // disable key editing during update
-  $('#loginName').val(profile.loginName)
-  $('#password').val(profile.password)
-  $('#code').val(profile.code)
+  const keyInput = document.getElementById('key')
+  keyInput.value = key
+  keyInput.disabled = true
 
-  $('#submitBtn').val('Update Profile')
-  $('#cancelEditBtn').show()
+  document.getElementById('loginName').value = profile.loginName
+  document.getElementById('password').value = profile.password
+  document.getElementById('code').value = profile.code
+
+  document.getElementById('submitBtn').value = 'Update Profile'
+  document.getElementById('cancelEditBtn').style.display = 'inline-block'
 
   editKey = key
 }
 
 function resetForm() {
-  $('#profileForm')[0].reset()
-  $('#key').prop('disabled', false)
-  $('#submitBtn').val('Add Profile')
-  $('#cancelEditBtn').hide()
+  document.getElementById('profileForm').reset()
+  const keyInput = document.getElementById('key')
+  keyInput.disabled = false
+
+  document.getElementById('submitBtn').value = 'Add Profile'
+  document.getElementById('cancelEditBtn').style.display = 'none'
+
   editKey = null
 }
 
-$(document).ready(() => {
-  renderProfiles()
-  $('#cancelEditBtn').hide()
+function loadProfileForEdit(key) {
+  getProfiles((profiles) => {
+    const profile = profiles[key]
+    if (profile) fillForm(key, profile)
+  })
+}
 
-  $('#profileForm').on('submit', (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+  renderProfiles()
+  document.getElementById('cancelEditBtn').style.display = 'none'
+
+  document.getElementById('profileForm').addEventListener('submit', (e) => {
     e.preventDefault()
 
-    const key = $('#key').val().trim()
-    const loginName = $('#loginName').val().trim()
-    const password = $('#password').val().trim()
-    const code = $('#code').val().trim()
+    const key = document.getElementById('key').value.trim()
+    const loginName = document.getElementById('loginName').value.trim()
+    const password = document.getElementById('password').value.trim()
+    const code = document.getElementById('code').value.trim()
 
     if (!key || !loginName || !password || !code) return
 
@@ -87,26 +97,8 @@ $(document).ready(() => {
     })
   })
 
-  $('#cancelEditBtn').on('click', (e) => {
+  document.getElementById('cancelEditBtn').addEventListener('click', (e) => {
     e.preventDefault()
     resetForm()
   })
-
-  $('#profileList')
-    .on('click', '.delete-btn', function () {
-      const key = $(this).data('key')
-      deleteProfile(key, renderProfiles)
-
-      // If deleting the currently edited profile, reset form
-      if (editKey === key) {
-        resetForm()
-      }
-    })
-    .on('click', '.edit-btn', function () {
-      const key = $(this).data('key')
-      getProfiles((profiles) => {
-        const profile = profiles[key]
-        if (profile) fillForm(key, profile)
-      })
-    })
 })
