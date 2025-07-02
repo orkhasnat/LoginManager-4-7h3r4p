@@ -133,6 +133,9 @@ body {
     margin: 0;
     padding: 20px;
     color: #333;
+}
+
+.bg {
     background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)),
         url("/img/bg.png") center center;
 }
@@ -154,7 +157,7 @@ h1 {
 }
 
 h2 {
-    color: #666;
+    color: #464545;
     margin-left: 10px;
 }
 
@@ -177,11 +180,11 @@ a:focus {
 }
 
 hr {
-    border: 4px #888;
+    border: 4px #222;
     border-radius: 10px;
     height: 4px;
     width: 98%;
-    background: linear-gradient(to right, #888, #444, #777);
+    background: linear-gradient(to right, #444, #222, #444);
     /* background-color: #888; */
     margin: 2.5em auto;
     /* Optional: add some soft shadow for depth */
@@ -194,9 +197,9 @@ hr {
     list-style: none;
     padding: 0;
     margin-bottom: 32px;
-    max-height: 400px;
+    /* max-height: 400px; */
     overflow-y: auto;
-    border: 1px solid #ddd;
+    border: 1px solid #1e88e5;
     border-radius: 10px;
     background: #fff;
     box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
