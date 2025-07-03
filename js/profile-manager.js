@@ -1,3 +1,5 @@
+let editKey = null
+
 async function renderProfiles() {
   const profiles = await getProfiles()
   const list = document.getElementById('profileList')
@@ -5,12 +7,11 @@ async function renderProfiles() {
 
   Object.keys(profiles).forEach(key => {
     const p = profiles[key]
-    const displayText = `${p.code} - ${p.loginName}`
+    const displayHTML = `<strong>${key}</strong> : [${p.code}] - <em>${p.loginName}</em> - <small>${p.password}</small>`
 
     const info = document.createElement('div')
     info.className = 'profile-info'
-    info.textContent = displayText
-    info.title = `${key}: ${p.loginName} / ${p.password}`
+    info.innerHTML = displayHTML
 
     const editBtn = document.createElement('button')
     editBtn.className = 'edit-btn'
@@ -44,6 +45,29 @@ async function loadProfileForEdit(key) {
   const profile = profiles[key]
   if (profile) fillForm(key, profile)
 }
+
+function resetForm() {
+  editKey = null
+  document.getElementById('key').value = ''
+  document.getElementById('loginName').value = ''
+  document.getElementById('password').value = ''
+  document.getElementById('code').value = ''
+  document.getElementById('key').disabled = false
+  document.getElementById('submitBtn').value = 'Add Profile'
+  document.getElementById('cancelEditBtn').style.display = 'none'
+}
+
+function fillForm(key, profile) {
+  editKey = key
+  document.getElementById('key').value = key
+  document.getElementById('loginName').value = profile.loginName
+  document.getElementById('password').value = profile.password
+  document.getElementById('code').value = profile.code
+  document.getElementById('key').disabled = true
+  document.getElementById('submitBtn').value = 'Update Profile'
+  document.getElementById('cancelEditBtn').style.display = 'inline-block'
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
   renderProfiles()
