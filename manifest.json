@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Therap Login Manager (Ork)",
+    "name": "7h3r4p Login Manager (Ork)",
     "version": "2.0",
-    "description": "Helps to store and easily login into the Therap system",
+    "description": "Helps to store and easily login into the 7h3r4p system",
     "action": {
         "default_popup": "popup.html",
         "default_icon": "icon.png"

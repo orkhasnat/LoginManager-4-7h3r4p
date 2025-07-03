@@ -95,3 +95,39 @@ document.addEventListener('DOMContentLoaded', () => {
     resetForm()
   })
 })
+
+
+document.getElementById('importBtn').addEventListener('click', () => {
+  document.getElementById('importFile').click()
+})
+
+document.getElementById('importFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0]
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = async (event) => {
+    try {
+      const importedData = JSON.parse(event.target.result)
+      const existingProfiles = await getProfiles()
+      const merged = { ...existingProfiles, ...importedData }
+      await saveProfiles(merged)
+      await renderProfiles()
+      alert('Profiles imported successfully.')
+    } catch (err) {
+      alert('Invalid JSON file. Import failed.')
+    }
+  }
+  reader.readAsText(file)
+})
+
+document.getElementById('exportBtn').addEventListener('click', async () => {
+  const profiles = await getProfiles()
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(profiles, null, 2))
+  const downloadAnchor = document.createElement('a')
+  downloadAnchor.setAttribute("href", dataStr)
+  downloadAnchor.setAttribute("download", "profiles.json")
+  document.body.appendChild(downloadAnchor)
+  downloadAnchor.click()
+  downloadAnchor.remove()
+})

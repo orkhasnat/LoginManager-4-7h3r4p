@@ -1,5 +1,5 @@
 
-# Simple Login Manager for Therap Sites
+# Simple Login Manager for 7h3r4p
 - Choose which profile you want to log in as.
 - Select login once to go to password form.
 - Select login again to log in.
