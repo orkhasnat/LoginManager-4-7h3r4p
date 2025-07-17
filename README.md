@@ -14,7 +14,7 @@ If you have any suggestions, feel free to contact me.
 - ~~update ui~~
 - ~~Edit the profiles~~
 - Change Profile Order by Dragging
-- work perfectly for incognito (might need to store in `chrome.storage.local` as well)
+- ~~work perfectly for incognito (might need to store in `chrome.storage.local` as well)~~ Works in Incognito without this.
 - ~~Have an export profiles button that can export all the creds, and also an import profile as well.~~
 - **Make it compatible with Firefox as well**
 - *Maybe add automatic update? (like Password Manager)*
