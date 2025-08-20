@@ -13,13 +13,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         setInputValue('#loginName', loginInfo.loginName)
         setInputValue('#providerCode', loginInfo.code)
 
-        const actionSubmit = document.querySelector('[name="_action_submit"]')
-        if (actionSubmit) actionSubmit.click()
+        const actionSubmit1 = document.querySelector('[name="_action_submit"]')
+        if (actionSubmit1) actionSubmit1.click()
 
         setInputValue('#password', loginInfo.password)
 
-        const submitButton = document.querySelector('#submitButton')
-        if (submitButton) submitButton.click()
+        // const submitButton = document.querySelector('#submitButton')
+        // if (submitButton) submitButton.click()
+        const actionSubmit2 = document.querySelector('[name="_action_submit"]')
+        if (actionSubmit2) actionSubmit2.click()
       }
     })
   }

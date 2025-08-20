@@ -18,3 +18,5 @@ If you have any suggestions, feel free to contact me.
 - ~~Have an export profiles button that can export all the creds, and also an import profile as well.~~
 - **Make it compatible with Firefox as well**
 - *Maybe add automatic update? (like Password Manager)*
+
+- Made it work with two clicks, but have to do it in one click. Promises maybe?
